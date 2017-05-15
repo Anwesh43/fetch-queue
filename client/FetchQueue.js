@@ -1,8 +1,9 @@
 class FetchQueue {
-    constructor() {
+    constructor(delay) {
         this.requestQueue = []
+        this.delay = delay||500
     }
-    addRequest(url,successCb,errorCb,headers,resType {
+    addRequest(url,successCb,errorCb,headers,resType) {
         const request = new Request(url,successCb,errorCb,headers,resType)
         this.requestQueue.push(request)
         if(this.requestQueue.length == 1) {
@@ -14,7 +15,10 @@ class FetchQueue {
         currRequest.process(()=>{
             this.requestQueue.splice(0,1)
             if(this.requestQueue.length != 0) {
-                this.processAllRequests()
+                setTimeout(()=>{
+                    this.processAllRequests()
+                },this.delay)
+
             }
         })
     }
@@ -29,11 +33,10 @@ class Request {
     }
     process(cb) {
         fetch(this.url,{headers:this.headers}).then((res)=>{
-            let resPromise = res.text()
             if(this.resType == 'json') {
-                resPromise = res.json()
+                return res.json()
             }
-            retrun resPromise
+            return res.text()
         }).then((result)=>{
             this.successCb(result)
             cb()
