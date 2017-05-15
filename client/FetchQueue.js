@@ -38,6 +38,7 @@ class Request {
             }
             return res.text()
         }).then((result)=>{
+            console.log("completed a request")
             this.successCb(result)
             cb()
         }).catch((err)=>{
