@@ -1,0 +1,19 @@
+<body>
+    <script src="../client/FetchQueue.js">
+    </script>
+    <script>
+        const fetchQueue = new FetchQueue()
+        fetchQueue.addRequest('https://api.github.com/users/Anwesh43/repos',(result)=>{
+            console.log(result.map((res)=>res.name))
+        },(err)=>{alert(err)},{},'json')
+        fetchQueue.addRequest('https://api.github.com/users/Anwesh43/repos',(result)=>{
+            console.log(result.map((res)=>res.description))
+        },(err)=>{alert(err)},{},'json')
+        fetchQueue.addRequest('https://api.github.com/users/Anwesh43/repos',(result)=>{
+            console.log(result.map((res)=>res.full_name))
+        },(err)=>{alert(err)},{},'json')
+        fetchQueue.addRequest('https://api.github.com/users/Anwesh43/repos',(result)=>{
+            console.log(result.map((res)=>res.size))
+        },(err)=>{alert(err)},{},'json')
+    </script>
+</body>
