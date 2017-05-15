@@ -6,11 +6,17 @@ class FetchQueue {
         const request = new Request(url,successCb,errorCb,headers,resType)
         this.requestQueue.push(request)
         if(this.requestQueue.length == 1) {
-            processAllRequests()
+            this.processAllRequests()
         }
     }
     processAllRequests() {
-      
+        const currRequest = this.requestQueue[0]
+        currRequest.process(()=>{
+            this.requestQueue.splice(0,1)
+            if(this.requestQueue.length != 0) {
+                this.processAllRequests()
+            }
+        })
     }
 }
 class Request {
